@@ -47,10 +47,22 @@ The import order in a Django project is:
 
 When writing code, it’s important to do so in such a way that it’s easier to move, rename, and version your work. In Python, explicit relative imports remove the need for hardcoding a module’s package via implicit relative imports, separating individual modules from being tightly coupled to the architecture around them.  
 
-<https://github.com/smagul/2scoops-django/blob/master/2scoops-django/1-coding-style/ex1.1.py>  
+[Example 1.2: Bad Python Imports](https://github.com/smagul/2scoops-django/blob/master/2scoops-django/1-coding-style/ex1.2.py)  
 
 Sure, your cones app works fine within your ice cream tracker project, but it has those nasty implicit relative imports that make it less portable and reusable:  
 
 - What if you wanted to reuse your cones app in another project that tracks your general dessert consumption, but you had to change the name due to a naming conflict (e.g. a conflict with a Django app for snow cones)?  
 - What if you simply wanted to change the name of the app at some point?  
   
+[Example 1.3: Relative Python Imports](https://github.com/smagul/2scoops-django/blob/master/2scoops-django/1-coding-style/ex1.3.py)  
+
+Table 1.1: Imports: Absolute vs. Explicit Relative vs. Implicit Relative  
+
+| Code                             | Import Type       | Usage                                                                                 |
+| -------------------------------- | ----------------- | ------------------------------------------------------------------------------------- |
+| from core.views import FoodMixin | absolute import   | Use when importing from outside the current app                                       |
+| from .models import WaffleCone   | explicit relative | Use when importing from another module in the current app                             |
+| from models import WaffleCone    | implicit relative | Often used when importing from another module in the current app, but not a good idea |
+
+`TIP`: [Doesn’t PEP 328 Clash With PEP 8?](https://mail.python.org/pipermail/python-dev/2010-October/104476.html)  
+Additional reading: <https://www.python.org/dev/peps/pep-0008/>
