@@ -1,0 +1,6 @@
+1. https://docs.djangoproject.com/en/1.11/misc/design-philosophies/
+2. https://12factor.net/
+3. https://docs.python.org/3/reference/lexical_analysis.html#f-strings
+4. https://mail.python.org/pipermail/python-dev/2010-October/104476.html
+5. https://www.python.org/dev/peps/pep-0008/
+6. https://docs.djangoproject.com/en/1.11/internals/contributing/writing-code/coding-style/
