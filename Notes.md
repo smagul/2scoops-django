@@ -7,6 +7,7 @@
     - [1.3 The Word on Imports](#13-the-word-on-imports)
     - [1.4 Use Explicit Relative Imports](#14-use-explicit-relative-imports)
     - [1.5 Avoid Using Import *](#15-avoid-using-import)
+        - [1.5.1 Other Python Naming Collisions](#151-other-python-naming-collisions)
 
 <!-- /TOC -->
 
@@ -70,4 +71,11 @@ Additional reading: <https://www.python.org/dev/peps/pep-0008/>
 
 ## 1.5 Avoid Using Import *
 
-The reason for this is to avoid implicitly loading all of another Python module’s locals into and over our current module’s namespace, this can produce unpredictable and sometimes catastrophic results.
+The reason for this is to avoid implicitly loading all of another Python module’s locals into and over our current module’s namespace, this can produce unpredictable and sometimes catastrophic results.  
+
+### 1.5.1 Other Python Naming Collisions
+
+You’ll run into similar problems if you try to import two things with the same name:  
+[Example 1.6: Python Module Collisions](https://github.com/smagul/2scoops-django/blob/master/2scoops-django/1-coding-style/ex1.6.py)  
+If you need to avoid a naming collision of this nature, you can always use aliases to overcome them:  
+[Example 1.7: Using Aliases to Avoid Python Module Collisions](https://github.com/smagul/2scoops-django/blob/master/2scoops-django/1-coding-style/ex1.7.py)  
