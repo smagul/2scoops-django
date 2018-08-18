@@ -1,3 +1,5 @@
+# Good Python Imports
+
 # Stdlib imports
 from math import sqrt
 from os.path import abspath

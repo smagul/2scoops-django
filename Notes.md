@@ -44,3 +44,13 @@ The import order in a Django project is:
 4. Imports from the apps that you created as part of your Django project.
 
 ## 1.4 Use Explicit Relative Imports
+
+When writing code, it’s important to do so in such a way that it’s easier to move, rename, and version your work. In Python, explicit relative imports remove the need for hardcoding a module’s package via implicit relative imports, separating individual modules from being tightly coupled to the architecture around them.  
+
+<https://github.com/smagul/2scoops-django/blob/master/2scoops-django/1-coding-style/ex1.1.py>  
+
+Sure, your cones app works fine within your ice cream tracker project, but it has those nasty implicit relative imports that make it less portable and reusable:  
+
+- What if you wanted to reuse your cones app in another project that tracks your general dessert consumption, but you had to change the name due to a naming conflict (e.g. a conflict with a Django app for snow cones)?  
+- What if you simply wanted to change the name of the app at some point?  
+  
