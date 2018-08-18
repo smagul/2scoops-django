@@ -6,6 +6,7 @@
         - [1.2.1 The 79-Character Limit](#121-the-79-character-limit)
     - [1.3 The Word on Imports](#13-the-word-on-imports)
     - [1.4 Use Explicit Relative Imports](#14-use-explicit-relative-imports)
+    - [1.5 Avoid Using Import *](#15-avoid-using-import)
 
 <!-- /TOC -->
 
@@ -65,4 +66,8 @@ Table 1.1: Imports: Absolute vs. Explicit Relative vs. Implicit Relative
 | from models import WaffleCone    | implicit relative | Often used when importing from another module in the current app, but not a good idea |
 
 `TIP`: [Doesn’t PEP 328 Clash With PEP 8?](https://mail.python.org/pipermail/python-dev/2010-October/104476.html)  
-Additional reading: <https://www.python.org/dev/peps/pep-0008/>
+Additional reading: <https://www.python.org/dev/peps/pep-0008/>  
+
+## 1.5 Avoid Using Import *
+
+The reason for this is to avoid implicitly loading all of another Python module’s locals into and over our current module’s namespace, this can produce unpredictable and sometimes catastrophic results.
