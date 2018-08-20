@@ -15,6 +15,18 @@
         - [1.7.1 JavaScript Style Guides](#171-javascript-style-guides)
         - [1.7.2 HTML and CSS Style Guides](#172-html-and-css-style-guides)
     - [1.8 Never Code to the IDE (Or Text Editor)](#18-never-code-to-the-ide-or-text-editor)
+- [2 The Optimal Django Environment Setup](#2-the-optimal-django-environment-setup)
+    - [2.1 Use the Same Database Engine Everywhere](#21-use-the-same-database-engine-everywhere)
+        - [2.1.1 You Can’t Examine an Exact Copy of Production Data Locally](#211-you-can%E2%80%99t-examine-an-exact-copy-of-production-data-locally)
+        - [2.1.2 Different Databases Have Different Field Types/Constraints](#212-different-databases-have-different-field-typesconstraints)
+        - [2.1.3 Fixtures Are Not a Magic Solution](#213-fixtures-are-not-a-magic-solution)
+    - [2.2 Use Pip and Virtualenv](#22-use-pip-and-virtualenv)
+        - [2.2.1 virtualenvwrapper](#221-virtualenvwrapper)
+    - [2.3 Install Django and Other Dependencies via Pip](#23-install-django-and-other-dependencies-via-pip)
+    - [2.4 Use a Version Control System](#24-use-a-version-control-system)
+    - [2.5 Optional: Identical Environments](#25-optional-identical-environments)
+        - [2.5.1 Docker](#251-docker)
+    - [2.6 Summary](#26-summary)
 
 <!-- /TOC -->
 
@@ -123,3 +135,87 @@ Use underscores in template block names rather than dashes.
 ## 1.8 Never Code to the IDE (Or Text Editor)
 
 For example, introspecting template tags or discovering their source can be difficult and time consuming for developers not using a very, very limited pool of IDEs. Therefore, we follow the commonly-used naming pattern of `<app_name>_tags.py`.
+
+# 2 The Optimal Django Environment Setup
+
+## 2.1 Use the Same Database Engine Everywhere
+
+A common developer pitfall is using SQLite3 for local development and PostgreSQL (or MySQL) in production. This section applies not only to the SQLite3/PostgreSQL scenario, but to any scenario where you’re using two different databases and expecting them to behave identically.  
+
+### 2.1.1 You Can’t Examine an Exact Copy of Production Data Locally  
+
+When your production database is different from your local development database, you can’t grab an exact copy of your production database to examine data locally.  
+Sure, you can generate a SQL dump from production and import it into your local database, but that doesn’t mean that you have an exact copy after the export and import.  
+
+### 2.1.2 Different Databases Have Different Field Types/Constraints  
+
+Keep in mind that different databases handle typing of field data differently. Django’s ORM attempts to accommodate those differences, but there’s only so much that it can do.  
+
+`TIP`: Django+PostgreSQL Rocks  
+
+### 2.1.3 Fixtures Are Not a Magic Solution  
+
+Fixtures are not a reliable tool for migrating large data sets from one database to another in a databaseagnostic way. They are simply not meant to be used that way. Don’t mistake the ability of fixtures to create basic data `(dumpdata/loaddata)` with the capability to migrate production data between database tools.  
+
+`WARNING`: Don’t Use SQLite3 with Django in Production  
+
+## 2.2 Use Pip and Virtualenv
+
+**Pip** is a tool that fetches Python packages from the **Python Package Index** and its mirrors. It is used to manage and install Python packages. It’s like easy_install but has more features, the key feature being support for virtualenv.  
+**Virtualenv** is a tool for creating isolated Python environments for maintaining package dependencies. It’s great for situations where you’re working on more than one project at a time, and where there are clashes between the version numbers of different libraries that your projects use.  
+
+For example, imagine that you’re working on one project that requires Django 1.10 and another that
+requires Django 1.11.  
+
+- Without virtualenv (or an alternative tool to manage dependencies), you have to reinstall Django every time you switch projects.  
+- If that sounds tedious, keep in mind that most real Django projects have at least a dozen dependencies to maintain.  
+
+### 2.2.1 virtualenvwrapper
+
+Virtualenvwrapper is a popular companion tool to pip and virtualenv and makes our lives easier, but it’s not an absolute necessity.
+
+- pip install virtualenvwrapper-win
+- mkvirtualenv twoscoops
+- setprojectdir .
+- deactivate
+- workon twoscoops
+
+## 2.3 Install Django and Other Dependencies via Pip
+
+`TIP`: Setting PYTHONPATH  
+
+If you have a firm grasp of the command line and environment variables, you can set your virtualenv `PYTHONPATH` so that the `django-admin.py` command can be used to serve your site and perform other tasks.
+You can also set your virtualenv’s `PYTHONPATH` to include the current directory with the latest version of pip. Running `"pip install -e ."` from your project’s root directory will do the trick, installing the current directory as a package that can be edited in place.  
+Additional reading:  
+
+- <http://hope.simons-rock.edu/~pshields/cs/python/pythonpath.html>  
+- <https://docs.djangoproject.com/en/1.11/ref/django-admin/>  
+
+## 2.4 Use a Version Control System
+
+Version control systems are also known as revision control or source control. Whenever you work on any Django project, you should use a version control system to keep track of your code changes.  
+Wikipedia has a detailed comparison of different version control systems: <https://en.wikipedia.org/wiki/Comparison_of_version_control_software>  
+
+## 2.5 Optional: Identical Environments
+
+### 2.5.1 Docker
+
+We can:  
+
+- Set up identical local development environments for everyone on our project’s dev team.
+- Configure these local development environments in a way similar to our staging, test, and production servers. 
+
+The potential downsides are:
+
+- Extra complexity that is not needed in many situations. For simpler projects where we’re not too worried about OS-level differences, it’s easier to skip this.
+- On older development machines, running even lightweight containers can slow performance to a crawl. Even on newer machines, small but noticeable overhead is added. 
+
+References for developing with Docker:
+
+- <https://cookiecutter-django.readthedocs.io/en/latest/developing-locally-docker.html>
+- <https://realpython.com/django-development-with-docker-compose-and-machine/>
+- <https://www.dockerbook.com/>
+
+## 2.6 Summary
+
+This chapter covered using the same database in development as in production, pip, virtualenv, and version control systems. These are good to have in your tool chest, since they are commonly used not just in Django, but in the majority of Python software development.
