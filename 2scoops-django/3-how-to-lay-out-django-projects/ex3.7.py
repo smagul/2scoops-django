@@ -1,0 +1,3 @@
+# virtualenvwrapper
+
+~/.virtualenvs/icecreamratings/

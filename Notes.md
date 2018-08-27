@@ -33,6 +33,11 @@
         - [3.2.2 Second Level: Django Project Root](#322-second-level-django-project-root)
         - [3.2.3 Second Level: Configuration Root](#323-second-level-configuration-root)
     - [3.3 Sample Project Layout](#33-sample-project-layout)
+    - [3.4 What About the Virtualenv](#34-what-about-the-virtualenv)
+        - [3.4.1 Listing Current Dependencies](#341-listing-current-dependencies)
+        - [3.5.1 Generating Project Boilerplate With Cookiecutter](#351-generating-project-boilerplate-with-cookiecutter)
+        - [3.5.2 Generating a Starting Project With Cookiecutter Django](#352-generating-a-starting-project-with-cookiecutter-django)
+    - [3.6 Summary](#36-summary)
 
 <!-- /TOC -->
 
@@ -286,3 +291,35 @@ Inside the icecreamratings_project/icecreamratings directory, at the *<django_pr
 
 `TIP`: **Conventions for Static Media Directory Names.**  
 In the example above, we follow the official Django documentation’s convention of using *static/* for the (non-user-generated) static media directory. If you find this confusing, there’s no harm in calling it *assets/* or *site_assets/* instead. Just remember to update your `STATICFILES_DIRS` setting appropriately.
+
+## 3.4 What About the Virtualenv
+
+A good place to create the virtualenv for this project would be a separate directory where you keep all of your virtualenvs for all of your Python projects. We like to put all our environments in one directory and all our projects in another.  
+
+### 3.4.1 Listing Current Dependencies
+
+```pip
+pip freeze                      # Listing Current Dependencies
+pip freeze > requirements.txt   # Saving Current Dependencies to a File
+```
+
+### 3.5.1 Generating Project Boilerplate With Cookiecutter
+
+Here’s how Cookiecutter works:
+
+1. First, it asks you to enter a series of values (e.g. the value for `project_name`).
+2. Then it generates all your boilerplate project files based on the values you entered.
+
+### 3.5.2 Generating a Starting Project With Cookiecutter Django
+
+```bash
+cookiecutter https://github.com/pydanny/cookiecutter-django
+```
+
+`TIP:` **What Are All the Other Files?**  
+Keep in mind that Cookiecutter Django goes much further than the basic project layout components that we outlined earlier in this chapter. It’s our ultimate Django project template that we use for our projects, so it has a lot of other bells and whistles.  
+It’s a lot fancier than the default `startproject` template provided by Django. We’d rather have you see our actual, real-life template that we use for our projects than a stripped-down, beginner-oriented template that we don’t use.
+
+## 3.6 Summary
+
+Project layout is one of those areas of Django where practices differ widely from developer to developer and group to group. What works for a small team may not work for a large team with distributed resources. Whatever layout is chosen should be documented clearly.
