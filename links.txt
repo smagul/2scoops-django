@@ -12,3 +12,4 @@
 11. https://cookiecutter-django.readthedocs.io/en/latest/developing-locally-docker.html
 12. https://realpython.com/django-development-with-docker-compose-and-machine/
 13. https://www.dockerbook.com/
+14. http://www.example.com/weblog/

@@ -38,6 +38,13 @@
         - [3.5.1 Generating Project Boilerplate With Cookiecutter](#351-generating-project-boilerplate-with-cookiecutter)
         - [3.5.2 Generating a Starting Project With Cookiecutter Django](#352-generating-a-starting-project-with-cookiecutter-django)
     - [3.6 Summary](#36-summary)
+- [4 Fundamentals of Django App Design](#4-fundamentals-of-django-app-design)
+    - [4.1 The Golden Rule of Django App Design](#41-the-golden-rule-of-django-app-design)
+        - [4.1.1 A Practical Example of Apps in a Project](#411-a-practical-example-of-apps-in-a-project)
+    - [4.2 What to Name Your Django Apps](#42-what-to-name-your-django-apps)
+    - [4.3 When in Doubt, Keep Apps Small](#43-when-in-doubt-keep-apps-small)
+        - [4.4.2 Uncommon App Modules](#442-uncommon-app-modules)
+    - [4.5 Summary](#45-summary)
 
 <!-- /TOC -->
 
@@ -323,3 +330,58 @@ It’s a lot fancier than the default `startproject` template provided by Django
 ## 3.6 Summary
 
 Project layout is one of those areas of Django where practices differ widely from developer to developer and group to group. What works for a small team may not work for a large team with distributed resources. Whatever layout is chosen should be documented clearly.
+
+# 4 Fundamentals of Django App Design
+
+**A Django project** is a web application powered by the Django web framework.  
+**Django apps** are small libraries designed to represent a single aspect of a project. A Django project is made up of many Django apps. Some of those apps are internal to the project and will never be reused; others are third-party Django packages.  
+**INSTALLED_APPS** is the list of Django apps used by a given project available in its `INSTALLED_APPS` setting.  
+**Third-party Django packages** are simply pluggable, reusable Django apps that have been packaged with the Python packaging tools.  
+
+## 4.1 The Golden Rule of Django App Design
+
+In essence, **each app should be tightly focused on its task.**  If an app can’t be explained in a single sentence of moderate length, or you need to say ‘and’ more than once, it probably means the app is too big and should be broken up.
+
+### 4.1.1 A Practical Example of Apps in a Project
+
+We’d call the Django project for our shop’s website `twoscoops_project`. The apps within our Django project might be something like:
+
+- A `flavors` app to track all of our ice cream flavors and list them on our website.
+- A `blog` app for the official Two Scoops blog.
+- An `events` app to display listings of our shop’s events on our website: events such as Strawberry Sundae Sundays and Fudgy First Fridays.
+
+Each one of these apps does one particular thing. Yes, the apps relate to each other, and you could imagine `events` or `blog` posts that are centered around certain ice cream flavors, but it’s much better to have three specialized apps than one app that does everything. In the future, we might extend the site with apps like:
+
+- A `shop` app to allow us to sell pints by mail order.
+- A `tickets` app, which would handle ticket sales for premium all-you-can-eat ice cream fests.
+
+## 4.2 What to Name Your Django Apps
+
+When possible keep to single word names like *flavors, animals, blog, polls, dreams, estimates, and finances.* A good, obvious app name makes the project easier to maintain.  
+As a general rule, the app’s name should be a plural version of the app’s main model, but there are many good exceptions to this rule, blog being one of the most common ones.  
+Don’t just consider the app’s main model, though. You should also consider how you want your URLs to appear when choosing a name. If you want your site’s blog to appear at <http://www.example.com/weblog/>, then consider naming your app `weblog` rather than *blog, posts,* or *blogposts*, even if the main model is Post, to make it easier for you to see which app corresponds with which part of the site.  
+Use valid, PEP 8-compliant, importable Python package names: short, all-lowercase names without numbers, dashes, periods, spaces, or special characters. If needed for readability, you can use underscores to separate words, although the use of underscores is discouraged.
+
+## 4.3 When in Doubt, Keep Apps Small
+
+Don’t worry too hard about getting app design perfect. It’s an art, not a science. Sometimes you have to rewrite them or break them up. That’s okay.  
+Try and keep your apps small. Remember, it’s better to have many small apps than to have a few giant apps.
+
+### 4.4.2 Uncommon App Modules
+
+**api/ :** This is the package we create for isolating the various modules needed when creating an api.  
+**behaviors.py :** An option for locating model mixins per  
+**constants.py :** A good name for placement of app-level settings. If there are enough of them involved in an app, breaking them out into their own module can add clarity to a project.  
+**decorators.py** Where we like to locate our decorators.  
+**db/** A package used in many projects for any custom model fields or components.  
+**fields.py** is commonly used for form fields, but is sometimes used for model fields when there isn’t enough field code to justify creating a *db/* package.  
+**factories.py** Where we like to place our test data factories.  
+**helpers.py** What we call helper functions. These are where we put code extracted from views and models to make them lighter. Synonymous with *utils.py*  
+**managers.py** When *models.py* grows too large, a common remedy is to move any custom model managers to this module.  
+**signals.py** While we argue against providing custom signals, this can be a useful place to put them.  
+**utils.py** Synonymous with *helpers.py*  
+**viewmixins.py** View modules and packages can be thinned by moving any view mixins to this module.
+
+## 4.5 Summary
+
+This chapter covered the art of Django app design. Specifically, each Django app should be tightlyfocused on its own task, possess a simple, easy-to-remember name. If an app seems too complex, it should be broken up into smaller apps. Getting app design right takes practice and effort, but it’s well worth the effort.
